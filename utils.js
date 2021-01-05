@@ -1,7 +1,7 @@
 const FetchBot = require('fetchbot');
 const dayjs = require('dayjs');
 
-const scrap = async (params) => {
+const scrap = async (params, today) => {
     let count;
     const dateFormat = 'MM/DD/YYYY';
     const baseUrl = 'https://www.ebay.com/sch/139971/i.html'
@@ -28,7 +28,11 @@ const scrap = async (params) => {
         salesData.dates = []
     }
 
-    const now = dayjs(); //.subtract(1, 'day');
+    let now = dayjs();
+
+    if (!today) {
+        now = now.subtract(1, 'day');
+    }
 
     count = salesData.dates.reduce((acc, curr) => {
         const date = dayjs(new Date(curr));
@@ -46,7 +50,7 @@ const scrap = async (params) => {
 
     if (count * page === scrapped) {
         params._pgn = (page + 1).toString();
-        const {count: c} = await scrap(params);
+        const {count: c} = await scrap(params, today);
         count += c;
     }
 

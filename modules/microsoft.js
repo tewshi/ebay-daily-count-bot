@@ -1,6 +1,6 @@
 const utils = require('../utils');
 
-const getDailySales = async () => {
+const getDailySales = async (today = false) => {
     const params = {
         '_dcat': '139971',
         '_from': 'R40', // only xbox
@@ -16,7 +16,7 @@ const getDailySales = async () => {
         'rt': 'nc',
     }
 
-    const {count, date} = await utils.scrap(params);
+    const {count, date} = await utils.scrap(params, today);
 
     console.log(`${count} XBox Series X's sold on ${date}`);
 }

@@ -29,9 +29,7 @@ app.use(function (err, req, res, next) {
     res.render('error');
 });
 
-sony.getDailySales().finally(
-    microsoft.getDailySales
-);
+sony.getDailySales(true).finally(() => microsoft.getDailySales(true));
 // run every 12:00 am -> 00:00 -> 0 0 * * *
 scheduler.scheduleJob('0 0 * * *', function () {
     console.log('Running daily sales bot');
