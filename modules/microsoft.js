@@ -1,5 +1,9 @@
 const utils = require('../utils');
 
+/**
+ * Get daily sales of Microsoft's XBox Series X
+ * @param {boolean} today tell the bot if it should fetch for today or yesterday
+ */
 const getDailySales = async (today = false) => {
     const params = {
         '_dcat': '139971',
@@ -16,8 +20,10 @@ const getDailySales = async (today = false) => {
         'rt': 'nc',
     }
 
+    // call the util function passing the params specific to Microsoft
     const {count, date} = await utils.scrap(params, today);
 
+    // print the total to console
     console.log(`${count} XBox Series X's sold on ${date}`);
 }
 

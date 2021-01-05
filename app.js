@@ -29,10 +29,13 @@ app.use(function (err, req, res, next) {
     res.render('error');
 });
 
+// run the daily bot for the first time, and count for today
 sony.getDailySales(true).finally(() => microsoft.getDailySales(true));
-// run every 12:00 am -> 00:00 -> 0 0 * * *
+
+// run every 12:00 am -> 00:00 and count for the previous day
 scheduler.scheduleJob('0 0 * * *', function () {
     console.log('Running daily sales bot');
+    // run sales for Sony, then sales for Microsoft
     sony.getDailySales().finally(
         microsoft.getDailySales
     )
