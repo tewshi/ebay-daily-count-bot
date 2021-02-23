@@ -74,4 +74,4 @@ const scrap = async (params, today) => {
     return {count, date: now.format(dateFormat)}
 }
 
-module.exports = {scrap}
+module.exports.scrap = scrap

@@ -3,9 +3,17 @@ const express = require('express');
 const scheduler = require('node-schedule');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const mongoose = require('mongoose');
 const run = require('./modules').run;
+require('dotenv').config()
 
 const app = express();
+
+mongoose.connect(`${process.env.DB_URL ?? ''}`, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true
+})
 
 app.use(logger('dev'));
 app.use(express.json());
