@@ -3,8 +3,7 @@ const express = require('express');
 const scheduler = require('node-schedule');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const sony = require('./modules/sony');
-const microsoft = require('./modules/microsoft');
+const run = require('./modules').run;
 
 const app = express();
 
@@ -30,15 +29,9 @@ app.use(function (err, req, res, next) {
 });
 
 // run the daily bot for the first time, and count for today
-sony.getDailySales(true).finally(() => microsoft.getDailySales(true));
+run(true);
 
 // run every 12:00 am -> 00:00 and count for the previous day
-scheduler.scheduleJob('0 0 * * *', function () {
-    console.log('Running daily sales bot');
-    // run sales for Sony, then sales for Microsoft
-    sony.getDailySales().finally(
-        microsoft.getDailySales
-    )
-});
+scheduler.scheduleJob('0 0 * * *', run);
 
 module.exports = app;

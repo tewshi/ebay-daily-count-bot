@@ -10,7 +10,6 @@ yarn
 ```
 
 run app
-
 ```bash
 yarn start
 ```
